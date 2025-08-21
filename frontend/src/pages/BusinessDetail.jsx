@@ -4,7 +4,9 @@ import { BASE_URL } from '../Helper/Helper';
 import axios from 'axios';
 
 export default function BusinessDetail() {
-  const [businessdetail,setBusinessDetail] = useState();
+  const [businessdetail, setBusinessDetail] = useState();
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
   const { b_detail_id } = useParams();
   // call the api after page reload
   useEffect(() => {
@@ -37,15 +39,29 @@ export default function BusinessDetail() {
         (BusinessDetail !== undefined) &&
         <h1>WELCOME TO BUSINESSDETAIL PAGE</h1>
       }
-      <h1>review</h1>
-            
-      <ul class="list-inline">
-        <li class="list-inline-item"><i class="fas fa-star text-warning"></i></li>
-        <li class="list-inline-item"><i class="fas fa-star text-warning"></i></li>
-        <li class="list-inline-item"><i class="fas fa-star text-warning"></i></li>
-        <li class="list-inline-item"><i class="fas fa-star text-warning"></i></li>
-        <li class="list-inline-item"><i class="fas fa-star text-warning"></i></li>
-      </ul>
+     <ul className="list-inline d-flex">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <li
+          key={star}
+          className="list-inline-item"
+          style={{ cursor: "pointer", fontSize: "30px" }}
+          onClick={() => setRating(star)}             // click se rating set
+          onMouseEnter={() => setHover(star)}         // hover se highlight
+          onMouseLeave={() => setHover(0)}            // hover hatane par reset
+        >
+          <i
+            className={
+              (hover || rating) >= star
+                ? "fas fa-star text-warning"   // filled star (yellow)
+                : "far fa-star text-warning"   // blank star
+            }
+          ></i>
+        </li>
+      ))}
+    </ul>
+
+    <p>Selected Rating: {rating}</p>
+
 
     </>
     
